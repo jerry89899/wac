@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<title>JavaScript Rekenmachine</title>
+<link rel="stylesheet" href="style.css">
+<body>
+	<div id="frame">
+		<div id="display">0</div>
+		<button id="btn_7">7</button>
+		<button id="btn_8">8</button>
+		<button id="btn_9">9</button>
+		<button id="btn_div">/</button>
+		<button id="btn_4">4</button>
+		<button id="btn_5">5</button>
+		<button id="btn_6">6</button>
+		<button id="btn_prod">*</button>
+		<button id="btn_1">1</button>
+		<button id="btn_2">2</button>
+		<button id="btn_3">3</button>
+		<button id="btn_min">-</button>
+		<button id="btn_clear">C</button>
+		<button id="btn_0">0</button>
+		<button id="btn_eq">=</button>
+		<button id="btn_plus">+</button>
+	</div>
+</body>
+<script>
+	function calculate(e) {
+		if (e == "=") {
+			display = document.getElementById("display").innerHTML;
+			sum = eval(display);
+			$("#display").empty();
+			$("#display").append(sum);
+		} else if (e == "C") {
+			$("#display").empty();
+		} else {
+			$("#display").append(e);
+		}
+
+		console.log(e);
+	}
+	document.addEventListener("click", function() {
+		calculate(event.target.textContent);
+	});
+</script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+	integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+	crossorigin="anonymous"></script>
+</html>
