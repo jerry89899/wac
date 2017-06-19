@@ -1,0 +1,47 @@
+<html>
+<head>
+</head>
+<body>
+	<h5>Login aub</h5>
+		<form id="loginform" method="post">
+			<label for='username'>Enter your username</label> <input type='text'
+				name='username' id='username' /> <label for='password'>Enter
+				your password</label> <input type='password' name='password' id='password' />
+			<button type='submit' name='loginButton' id="loginButton"
+				class='col s12 btn btn-large waves-effect indigo'>Login</button>
+		</form>
+
+
+		<script
+        src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+		<script type="text/javascript">
+			$("#loginButton")
+					.click(
+							function(event) {
+								var data = $("#loginform").serialize();
+
+								$
+										.post(
+												"http://localhost:8080/firstapp/restservices/authentication",
+												data,
+												function(response) {
+													window.sessionStorage
+															.setItem(
+																	"sessionToken",
+																	response);
+													window.location
+															.replace("manageCountries.html");
+
+												}).fail(
+												function(jqXHR, textStatus,
+														errorThrown) {
+													console.log(textStatus);
+													console.log(errorThrown);
+												});
+							});
+		</script>
+</body>
+
+</html>
