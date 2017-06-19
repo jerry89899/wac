@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="text" id="tekst" value="" onchange="storage()">
+<a href="p6output.html">other page</a>
+</body>
+<script>
+    function storage() {
+       tekst = document.getElementById('tekst').value;
+        window.localStorage.setItem('tekst',tekst);
+    }
+</script>
+</html>

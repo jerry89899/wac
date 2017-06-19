@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script
+        src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            background-color: #D7D5CD;
+        }
+
+        .location-data {
+            float: left;
+        }
+
+        #frame {
+            width: 100%;
+        }
+
+        .labels {
+            float: left;
+            width: 200px;
+            white-space: pre-line;
+            margin-top: -20px;
+        }
+        .location-data{
+            float: left;
+            width: 300px;
+        }
+    </style>
+</head>
+<body>
+<div id="frame">
+    <div id="myLocation">
+<h2>Mijn locatie</h2>
+        <div class="labels">
+            <label>Landcode:</label>
+            <label>Land:</label>
+            <label>Regio:</label>
+            <label>Stad:</label>
+            <label>Postcode:</label>
+            <label>Latitude:</label>
+            <label>longitude:</label>
+            <label>IP:</label>
+        </div>
+        <div class="location-data">
+            <div class="location-data lc"></div>
+            <div class="location-data land"></div>
+            <div class="location-data regio"></div>
+            <div class="location-data stad"></div>
+            <div class="location-data post"></div>
+            <div class="location-data lat"></div>
+            <div class="location-data long"></div>
+            <div class="location-data ip"></div>
+        </div>
+    </div>
+    <div id="weatherInfo">
+        <h3 id="weatherHeader"></h3>
+        <label class="weatherLabel">Temperatuur:</label>
+        <label class="weatherValue" id="temperature"></label>
+        <label class="weatherLabel">Luchtvochtigheid:</label>
+        <label class="weatherValue" id="humidity"></label>
+        <label class="weatherLabel">Windsnelheid:</label>
+        <label class="weatherValue" id="windspeed"></label>
+        <label class="weatherLabel">Windrichting:</label>
+        <label class="weatherValue" id="windDirection"></label>
+        <label class="weatherLabel">Zonsopkomst:</label>
+        <label class="weatherValue" id="sunrise"></label>
+        <label class="weatherLabel">Zonsondergang:</label>
+        <label class="weatherValue" id="sunset"></label>
+    </div>
+
+    <div id="countryList">
+        <h3>Beschikbare vakantiebestemmingen</h3>
+        <table id="countryTable">
+            <tr>
+                <th>Land</th>
+                <th>Hoofdstad</th>
+                <th>Regio</th>
+                <th>Oppervlakte</th>
+                <th>Inwoners</th>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- Hier komen jouw script-tags -->
+
+<script>
+    init();
+    function init() {
+        $.get("http://ip-api.com/json", function (data) {
+            console.log(data.city);
+            $('.lc').text(data.countryCode);
+            $('.land').text(data.country);
+            $('.regio').text(data.regionName);
+            $('.stad').text(data.city);
+            $('.post').text(data.zip);
+            $('.lat').text(data.lat);
+            $('.long').text(data.lon);
+            $('.ip').text(data.query);
+            showWeather(data.lat, data.lon, data.city);
+        });
+        loadCountries();
+        function showWeather(latitude, longitude, city) {
+            $("#weatherHeader").text("Het weer in " + city);
+            $.getJSON("http://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&APPID=faaecfc1730655373dde006192387be4",
+                function(data) {
+                    $("#temperature").text((data.main.temp - 272.15).toFixed(1) + " �C");
+                    $("#humidity").text(data.main.humidity + "%");
+                    $("#windspeed").text((data.wind.speed * 3.6).toFixed(1) + " km/u");
+                    $("#windDirection").text(degToDirection(data.wind.deg));
+                    $("#sunrise").text(msecsToTime(data.sys.sunrise));
+                    $("#sunset").text(msecsToTime(data.sys.sunset));
+                });
+        }
+
+        function loadCountries() {
+            $.get("restservices/countries", function(data) {
+                $.each(data, function(i, country) {
+                    $("#countryTable").append(
+                        "<tr class='country' lat='" + country.lat + "' lon='" + country.lng +"' capital='" + country.capital + "'>" +
+                        "<td>" + country.name + "</td>" +
+                        "<td>" + country.capital + "</td>" +
+                        "<td>" + country.region + "</td>" +
+                        "<td>" + country.surface + "</td>" +
+                        "<td>" + country.population + "</td>" +
+                        "</tr>");
+                });
+                $("tr.country").click(function() {
+                    var city = $(this).attr("capital");
+                    var lat = $(this).attr("lat");
+                    var lon = $(this).attr("lon");
+                    showWeather(lat, lon, city);
+                })
+            });
+        }
+
+        function msecsToTime(msecs) {
+            var date = new Date(msecs);
+            var hrs = ("0" + date.getHours()).slice(-2);
+            var mins = ("0" + date.getMinutes()).slice(-2);
+            var secs = ("0" + date.getSeconds()).slice(-2);
+            return(hrs+ ":" + mins + ":" + secs);
+        }
+
+        function degToDirection(deg) {
+            var val = parseInt(deg / 45)
+            var directions = ["Noord","Noordoost","Oost","Zuidoost",
+                "Zuid","Zuidwest", "West", "Noordwest"];
+            return (directions[val % 8]);
+        }
+
+        $("#myCity").click(function () {
+            var lat = $("#myLat").text();
+            var lon = $("#myLon").text();
+            var city = $("#myCity").text();
+            showWeather(lat, lon, city);
+        });
+    }
+</script>
+
+</body>
+</html>
