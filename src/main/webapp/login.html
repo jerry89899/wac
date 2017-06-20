@@ -23,7 +23,7 @@
 								var data = $("#loginform").serialize();
 								$.ajax({
 									  type: "POST",
-									  url: "https://localhost:8080/firstapp/restservices/authentication",
+									  url: "/restservices/authentication",
 									  data:data,
 									  contentType:"application/x-www-form-urlencoded",
 									  success: function(response){
