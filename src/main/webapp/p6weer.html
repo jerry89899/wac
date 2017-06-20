@@ -135,7 +135,7 @@
 <script>
     init();
     function init() {
-        $.get("http://ip-api.com/json", function (data) {
+        $.get("https://ip-api.com/json", function (data) {
             console.log(data.city);
             $('.lc').text(data.countryCode);
             $('.land').text(data.country);
@@ -150,7 +150,7 @@
         loadCountries();
         function showWeather(latitude, longitude, city) {
             $("#weatherHeader").text("Het weer in " + city);
-            $.getJSON("http://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&APPID=faaecfc1730655373dde006192387be4",
+            $.getJSON("https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&APPID=faaecfc1730655373dde006192387be4",
                 function (data) {
                     $("#temperature").text((data.main.temp - 272.15).toFixed(1) + "C");
                     $("#humidity").text(data.main.humidity + "%");
@@ -158,7 +158,7 @@
                     $("#windDirection").text(degToDirection(data.wind.deg));
                     $("#sunrise").text(epochToTime(data.sys.sunrise));
                     $("#sunset").text(epochToTime(data.sys.sunset));
-                    $("#weer-icon").attr("src", "http://openweathermap.org/img/w/"+data.weather[0].icon+".png");
+                    $("#weer-icon").attr("src", "https://openweathermap.org/img/w/"+data.weather[0].icon+".png");
                 });
         }
 

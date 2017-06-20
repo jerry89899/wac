@@ -228,7 +228,7 @@
 	    loadCountries();
 	});
 	function loadCountries() {
-	    $.get("http://localhost:8080/firstapp/restservices/countries", (data) => {
+	    $.get("https://localhost:8080/firstapp/restservices/countries", (data) => {
 
 	        $(data).each(function(index) {
 
@@ -245,7 +245,7 @@
 	$("#countryCollection").delegate('a', 'click', function() {
 	    code = $(this).data("code");
 	    console.log(code);
-	$.get("http://localhost:8080/firstapp/restservices/countries/"+code, (data) =>{
+	$.get("https://localhost:8080/firstapp/restservices/countries/"+code, (data) =>{
 
 	    $(data).each(function(index) {
 	        console.log(data);
@@ -273,7 +273,7 @@
 	    event.preventDefault();
 	var data = $("#inputForm").serialize();
 	console.log(data);
-	    $.post("http://localhost:8080/firstapp/restservices/countries",data, function(response){
+	    $.post("https://localhost:8080/firstapp/restservices/countries",data, function(response){
 	        console.log(JSON.stringify(response));
 	    });
 	});
@@ -282,9 +282,9 @@
 	    event.preventDefault();
 	    var data = $("#updateForm").serialize();
 	    console.log(data);
-	    console.log("http://localhost:8080/firstapp/restservices/countries/"+$("#codeUpdate").text());
+	    console.log("https://localhost:8080/firstapp/restservices/countries/"+$("#codeUpdate").text());
 	    $.ajax({
-	        url: "http://localhost:8080/firstapp/restservices/countries/"+$("#codeUpdate").text(),
+	        url: "https://localhost:8080/firstapp/restservices/countries/"+$("#codeUpdate").text(),
 	        type: "put",
 	        data: data
 
@@ -295,9 +295,9 @@
 	        event.preventDefault();
 	        var data = $("#updateForm").serialize();
 	        console.log(data);
-	        console.log("http://localhost:8080/firstapp/restservices/countries/"+$("#codeUpdate").text());
+	        console.log("https://localhost:8080/firstapp/restservices/countries/"+$("#codeUpdate").text());
 	        $.ajax({
-	            url: "http://localhost:8080/firstapp/restservices/countries/"+$("#codeUpdate").text(),
+	            url: "https://localhost:8080/firstapp/restservices/countries/"+$("#codeUpdate").text(),
 	            type: "delete",
 	            data: data
 
@@ -309,7 +309,7 @@
 	});
 
 	function searchCountries() {
-	    $.get("http://localhost:8080/firstapp/restservices/countries/search/"+$("#searchInput").val(), (data) => {
+	    $.get("https://localhost:8080/firstapp/restservices/countries/search/"+$("#searchInput").val(), (data) => {
 	    $("#countryCollection").empty();
 	        $(data).each(function(index) {
 
@@ -326,7 +326,7 @@
 	});
 
 	function getPop() {
-	    $.get("http://localhost:8080/firstapp/restservices/countries/population", (data) => {
+	    $.get("https://localhost:8080/firstapp/restservices/countries/population", (data) => {
 	        $("#countryCollection").empty();
 	        $(data).each(function(index) {
 
@@ -342,7 +342,7 @@
 	    getPop();
 	});
 	function getSur() {
-	    $.get("http://localhost:8080/firstapp/restservices/countries/surface", (data) => {
+	    $.get("https://localhost:8080/firstapp/restservices/countries/surface", (data) => {
 	        $("#countryCollection").empty();
 	        $(data).each(function(index) {
 
